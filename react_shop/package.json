@@ -1,0 +1,26 @@
+{
+  "name": "react_shop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@stitches/react": "^1.2.8",
+    "install": "^0.13.0",
+    "keen-slider": "^6.8.5",
+    "next": "13.2.4",
+    "npm": "^9.6.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "stripe": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.33",
+    "typescript": "5.0.3"
+  }
+}
