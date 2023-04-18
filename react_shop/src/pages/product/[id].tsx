@@ -1,9 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
+
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
 import { ImageContainer, ProductContainer, ProductDetail } from "../../styles/pages/product";
+import axios from "axios";
+import { useState } from "react";
 
 
 interface ProductProps {
@@ -17,39 +19,55 @@ interface ProductProps {
   }
 }
 export default function Product({product}:ProductProps) {
-  const {isFallback} = useRouter();
  
-  return (
-      <ProductContainer>
-          <ImageContainer>
-            <Image src={product.imageUrl}  width={520} height={480} alt=""  />
-          </ImageContainer>
-          <ProductDetail>
-            <h1>{product.name}</h1>
-            <span>{product.price}</span>
-           <p>{product.description}</p>
-             <button>Comprar agora</button>
-          </ProductDetail>
-      </ProductContainer>
-    )
-}
+  const [isCreatingSession, setIsCreatingSession] = useState(false)
+ async function handleBuyProduct() {
+   try {
+     setIsCreatingSession(true)
+     const response = await axios.post('/api/checkout', {
+       priceId: product.defaultPriceId
+     })
+     const { checkoutUrl } = response.data
+     window.location.href = checkoutUrl.url
 
+   } catch (err) {
+     setIsCreatingSession(false)
+     alert('falha ao redirecionar')
+   }
+ }
+
+  return (
+    <ProductContainer>
+    <ImageContainer>
+      <Image src={product.imageUrl}  width={520} height={480} alt=""  />
+    </ImageContainer>
+    <ProductDetail>
+      <h1>{product.name}</h1>
+      <span>{product.price}</span>
+     <p>{product.description}</p>
+       <button disabled={isCreatingSession} onClick={handleBuyProduct}>Comprar agora</button>
+    </ProductDetail>
+</ProductContainer>
+  )
+
+}
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
-    fallback: true,
+    fallback:'blocking'
   }
 }
-export const getStaticProps: GetStaticProps<any,{id: string}> = async ({params}) => {
+
+export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}) => {
   const productId = params.id;
-  const product = await stripe.products.retrieve(productId, {
+  const product = await stripe.products.retrieve(productId,{
     expand: ['default_price']
   })
   const price = product.default_price as Stripe.Price
   return {
     props: {
       product: {
-        id: product.id,
+        id: productId,
         name: product.name,
         imageUrl: product.images[0],
         price: new Intl.NumberFormat('pt-br',{
@@ -59,7 +77,6 @@ export const getStaticProps: GetStaticProps<any,{id: string}> = async ({params})
         description: product.description,
         defaultPriceId: price.id
       }
-    },
-    revalidate: 60 * 60 * 1 // 1 hora.
+    }
   }
 }

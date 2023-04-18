@@ -28,5 +28,13 @@ export const ProductDetail = styled("div",{
   },
   button: {
     marginTop: 'auto',
+
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed'
+    },
+    '&:not(disabled):hover': {
+      backgroundColor: '$green300'
+    }
   }
 })
