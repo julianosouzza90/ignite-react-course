@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "/packages/*"
+  ],
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4"
+  }
+}

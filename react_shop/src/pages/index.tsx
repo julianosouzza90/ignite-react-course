@@ -8,6 +8,7 @@ import Stripe from 'stripe'
 import { HomeContainer, Product} from '../styles/pages/home'
 
 import { stripe } from '../lib/stripe'
+import Head from 'next/head'
 
 interface HomeProps {
   products: {
@@ -29,7 +30,12 @@ export default function Home({products}:HomeProps) {
 
   )
   return(
-    <HomeContainer ref={sliderRef} className="keen-slider">
+   <>
+   <Head>
+    <title>Ignite Shop - Inicio</title>
+    <button>Cart</button>
+   </Head>
+     <HomeContainer ref={sliderRef} className="keen-slider">
       {
         products.map(product => (
           <Link href={`product/${product.id}`} key={product.id} prefetch={false}>
@@ -45,6 +51,7 @@ export default function Home({products}:HomeProps) {
       }
         
     </HomeContainer>
+   </>
   )
 }
 

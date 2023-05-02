@@ -1,0 +1,17 @@
+{
+  "name": "@ignite-ui/react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint src/**/*.ts* --fix"
+  },
+  "dependencies": {
+    "@ignite-ui/colors": "*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
