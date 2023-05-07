@@ -7,15 +7,16 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@ignite-ui/eslint-config-custom": "*",
+    "@rocketseat/eslint-config": "^1.2.0",
+    "@storybook/theming": "^7.0.9",
     "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
     "prettier": "^2.5.1",
     "turbo": "^1.9.3"
   },
   "name": "desing_system",
   "packageManager": "npm@9.5.1",
   "workspaces": [
-    "apps/*",
     "packages/*"
   ]
 }
